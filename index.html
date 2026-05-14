@@ -813,7 +813,7 @@ body {
         <div id="renda-salarios"></div>
         <div class="divider"></div>
         <div class="form-group form-grid-2" style="margin-bottom:0;">
-          <div><label>Nome</label><input type="text" id="sal-nome" placeholder="Ex: Rodrigo"/></div>
+          <div><label>Nome</label><input type="text" id="sal-nome" placeholder="Ex: Salário"/></div>
           <div><label>Valor (R$)</label><input type="number" id="sal-valor" placeholder="0,00" step="0.01"/></div>
         </div>
         <button class="btn-submit" style="margin-top:12px;" onclick="addSalario()">Adicionar salário</button>
@@ -1229,9 +1229,9 @@ function getCartaoMeta() {
 }
 // Keep CARTAO_META as a live reference — use getCartaoMeta() everywhere instead
 const CARTAO_META_STATIC = {
-  inter07:  { label:'Inter 07',     color:'#5c9eff', bg:'rgba(92,158,255,.15)' },
-  nubank:   { label:'Nubank 09',    color:'#c084fc', bg:'rgba(192,132,252,.15)' },
-  itau:     { label:'Itaú 20',      color:'#ff9340', bg:'rgba(255,147,64,.15)'  }
+  cartao1:  { label:'Cartão 1',     color:'#5c9eff', bg:'rgba(92,158,255,.15)' },
+  cartao2:  { label:'Cartão 2',     color:'#c084fc', bg:'rgba(192,132,252,.15)' },
+  cartao3:  { label:'Cartão 3',     color:'#ff9340', bg:'rgba(255,147,64,.15)'  }
 };
 function CARTAO_META_FN() { return getCartaoMeta(); }
 
@@ -1249,111 +1249,16 @@ const APP_VERSION = 23; // increment this on every new download
 
 const DEFAULT_STATE = {
   version: APP_VERSION,
-  selectedMes: 2,
+  selectedMes: 1,
   dashFilter: 'todos',
   parcFilter: 'todos',
   espoFilter: 'todos',
-  cartoes: [
-    { id:'inter07',  nome:'Inter 07',    banco:'Inter',  venc:7,  melhor:1,  limite:5000,  cor:'#5c9eff', obs:'' },
-    { id:'nubank',   nome:'Nubank 09',   banco:'Nubank', venc:9,  melhor:2,  limite:8000,  cor:'#c084fc', obs:'' },
-    { id:'itau',     nome:'Itaú 20',     banco:'Itaú',   venc:20, melhor:12, limite:10000, cor:'#ff9340', obs:'' }
-  ],
-  salarios: [ {nome:'Rodrigo',valor:2300}, {nome:'Amanda',valor:2500} ],
-  extras: [ {mes:0,valor:2788,desc:'Extra'} ],
-  fixos: [
-    {desc:'Parcela Caixa AP',   valor:1591,   tipo:'fixo',inicio:0,n:99},
-    {desc:'Condomínio',         valor:380,    tipo:'fixo',inicio:0,n:99},
-    {desc:'Empréstimo pessoal', valor:191.16, tipo:'fixo',inicio:0,n:99},
-    {desc:'Internet',           valor:115,    tipo:'fixo',inicio:0,n:99},
-    {desc:'Luz',                valor:100,    tipo:'fixo',inicio:0,n:99},
-    {desc:'Água',               valor:100,    tipo:'fixo',inicio:0,n:99}
-  ],
-  parcelamentos: [
-    // ── Inter 07 ──────────────────────────────────────────────────────
-    {cartao:'inter07', desc:'Loovi seguro',      tipo:'fixo',      valMes:169.9,  inicio:0, n:99},
-    {cartao:'inter07', desc:'Wellhub',            tipo:'fixo',      valMes:69.9,   inicio:0, n:99},
-    {cartao:'inter07', desc:'Pedra apê',          tipo:'parcelado', valMes:360.54, inicio:0, n:7},
-    {cartao:'inter07', desc:'Bateria Palio',      tipo:'parcelado', valMes:64,     inicio:0, n:5},
-    {cartao:'inter07', desc:'Detran',             tipo:'parcelado', valMes:106.34, inicio:0, n:3},
-    {cartao:'inter07', desc:'SHOPEE *Lincase',    tipo:'parcelado', valMes:5.98,   inicio:2, n:2},
-    {cartao:'inter07', desc:'dentista rodrigo',   tipo:'parcelado', valMes:233.33, inicio:3, n:6},
-    {cartao:'inter07', desc:'revestimento leroy', tipo:'parcelado', valMes:102.0,  inicio:3, n:5},
-    // ── Inter 07 Vitoria removido ────────────────────────────────────
-    // ── Nubank 09 ─────────────────────────────────────────────────────
-    {cartao:'nubank',  desc:'Telhanorte',         tipo:'parcelado', valMes:151.63, inicio:0, n:10},
-    {cartao:'nubank',  desc:'Curso de inglês',    tipo:'parcelado', valMes:235.29, inicio:0, n:7},
-    {cartao:'nubank',  desc:'Amazon filtro',      tipo:'parcelado', valMes:55.8,   inicio:0, n:5},
-    {cartao:'nubank',  desc:'Empréstimo NB',      tipo:'parcelado', valMes:198.18, inicio:0, n:3},
-    {cartao:'nubank',  desc:'leroy revestimento', tipo:'parcelado', valMes:89.53,  inicio:3, n:2},
-    {cartao:'nubank',  desc:'Emprestimo',         tipo:'parcelado', valMes:198.18, inicio:2, n:2},
-    {cartao:'nubank',  desc:'parcelamento final abril', tipo:'parcelado', valMes:672.26, inicio:2, n:1},
-    {cartao:'nubank',  desc:'shoppe abril/maio',  tipo:'parcelado', valMes:74.53,  inicio:2, n:2},
-    {cartao:'nubank',  desc:'CHOCOLANDIA',        tipo:'parcelado', valMes:6.99,   inicio:2, n:2},
-    {cartao:'nubank',  desc:'busca busca',        tipo:'parcelado', valMes:14.51,  inicio:2, n:2},
-    {cartao:'nubank',  desc:'shoppe abril/maio/junho', tipo:'parcelado', valMes:13.10, inicio:2, n:3},
-    {cartao:'nubank',  desc:'amazon',             tipo:'parcelado', valMes:12.10,  inicio:2, n:4},
-    {cartao:'nubank',  desc:'shoppe 6x',          tipo:'parcelado', valMes:5.98,   inicio:2, n:6},
-    {cartao:'nubank',  desc:'boticario',          tipo:'parcelado', valMes:10.01,  inicio:2, n:7},
-    {cartao:'nubank',  desc:'shoppe 9x',          tipo:'parcelado', valMes:67.47,  inicio:2, n:9},
-    {cartao:'nubank',  desc:'farmácia Alice',     tipo:'parcelado', valMes:41.48,  inicio:3, n:3},
-    {cartao:'nubank',  desc:'outback',            tipo:'parcelado', valMes:72.99,  inicio:3, n:2},
-    {cartao:'nubank',  desc:'bebidas assai festa luck', tipo:'parcelado', valMes:31.18, inicio:3, n:2},
-    {cartao:'nubank',  desc:'rodape leroy',       tipo:'parcelado', valMes:51.80,  inicio:3, n:5},
-    {cartao:'nubank',  desc:'farmacia',           tipo:'parcelado', valMes:63.80,  inicio:3, n:2},
-    {cartao:'nubank',  desc:'presente any',       tipo:'parcelado', valMes:109.14, inicio:2, n:2},
-    {cartao:'nubank',  desc:'drogasil',           tipo:'parcelado', valMes:90.78,  inicio:2, n:2},
-    {cartao:'nubank',  desc:'empréstimo pedreiro',tipo:'parcelado', valMes:100.86, inicio:2, n:3},
-    {cartao:'nubank',  desc:'EMPRESTIMO',         tipo:'parcelado', valMes:53.62,  inicio:2, n:3},
-    // ── Itaú 20 ───────────────────────────────────────────────────────
-    {cartao:'itau',    desc:'Amazon Prime',       tipo:'fixo',      valMes:19.9,   inicio:0, n:99},
-    {cartao:'itau',    desc:'Amazon Music',       tipo:'fixo',      valMes:11.9,   inicio:0, n:99},
-    {cartao:'itau',    desc:'Cama Alice',         tipo:'parcelado', valMes:149.99, inicio:0, n:11},
-    {cartao:'itau',    desc:'Geladeira',          tipo:'parcelado', valMes:220.85, inicio:0, n:9},
-    {cartao:'itau',    desc:'Assaí',              tipo:'parcelado', valMes:97.39,  inicio:0, n:2},
-    {cartao:'itau',    desc:'iFood',              tipo:'parcelado', valMes:33.28,  inicio:2, n:3},
-    {cartao:'itau',    desc:'MERCADOLIVRE',       tipo:'parcelado', valMes:26.18,  inicio:2, n:8},
-    {cartao:'itau',    desc:'iFood 2x',           tipo:'parcelado', valMes:31.78,  inicio:2, n:2},
-    {cartao:'itau',    desc:'iFood 3x',           tipo:'parcelado', valMes:35.47,  inicio:2, n:3},
-    {cartao:'itau',    desc:'AMERICANA',          tipo:'parcelado', valMes:57.52,  inicio:0, n:3},
-    {cartao:'itau',    desc:'Forno de embutir',   tipo:'parcelado', valMes:132.0,  inicio:3, n:10},
-    {cartao:'itau',    desc:'KALLAN',             tipo:'parcelado', valMes:52.50,  inicio:0, n:3},
-    {cartao:'itau',    desc:'SENDASDISTRI',       tipo:'parcelado', valMes:40.66,  inicio:0, n:3},
-    {cartao:'itau',    desc:'BECOGOLDEN',         tipo:'parcelado', valMes:38.90,  inicio:0, n:3},
-    {cartao:'itau',    desc:'torra torra',        tipo:'parcelado', valMes:27.99,  inicio:2, n:3},
-    {cartao:'itau',    desc:'SUSHIKENJI sushi amanda', tipo:'parcelado', valMes:52.89, inicio:2, n:3},
-    {cartao:'itau',    desc:'DROGASIL',           tipo:'parcelado', valMes:56.32,  inicio:2, n:2},
-    {cartao:'itau',    desc:'SENDASDISTRIB',      tipo:'parcelado', valMes:65.01,  inicio:2, n:2},
-    {cartao:'itau',    desc:'iFood fev/abr',      tipo:'parcelado', valMes:36.31,  inicio:0, n:3},
-    {cartao:'itau',    desc:'iFood mar/abr',      tipo:'parcelado', valMes:47.19,  inicio:1, n:2}
-  ],
-  esporadicos: [
-    // ── Imagem 3 / 2 — gastos esporádicos registrados ─────────────────
-    {data:'2026-04-16',desc:'posto de gasolina',    valor:20.0,  cartao:'Itaú 20',  cartaoKey:'itau',   cat:'Transporte',  obs:'',          faturaMes:3},
-    {data:'2026-04-15',desc:'pepsi oxxo',           valor:9.0,   cartao:'Inter 07', cartaoKey:'inter07',cat:'Mercado',     obs:'',          faturaMes:3},
-    {data:'2026-04-15',desc:'almoço amanda',        valor:33.0,  cartao:'Itaú 20',  cartaoKey:'itau',   cat:'Alimentação', obs:'',          faturaMes:3},
-    {data:'2026-04-15',desc:'rosquinha amanda',     valor:4.0,   cartao:'Itaú 20',  cartaoKey:'itau',   cat:'Alimentação', obs:'',          faturaMes:3},
-    {data:'2026-04-15',desc:'posto de gasolina',    valor:30.0,  cartao:'Itaú 20',  cartaoKey:'itau',   cat:'Transporte',  obs:'',          faturaMes:3},
-    {data:'2026-04-14',desc:'almoço amanda',        valor:30.0,  cartao:'Itaú 20',  cartaoKey:'itau',   cat:'Alimentação', obs:'',          faturaMes:3},
-    {data:'2026-04-14',desc:'rosquinha amanda',     valor:16.0,  cartao:'Itaú 20',  cartaoKey:'itau',   cat:'Alimentação', obs:'',          faturaMes:3},
-    {data:'2026-04-13',desc:'adega pepsi black',    valor:11.0,  cartao:'Inter 07', cartaoKey:'inter07',cat:'Alimentação', obs:'',          faturaMes:3},
-    {data:'2026-04-13',desc:'ifood almoço',         valor:13.0,  cartao:'Inter 07', cartaoKey:'inter07',cat:'Alimentação', obs:'',          faturaMes:3},
-    {data:'2026-04-12',desc:'pizza emoções',        valor:38.49, cartao:'Nubank 09',cartaoKey:'nubank', cat:'Alimentação', obs:'',          faturaMes:3},
-    {data:'2026-04-12',desc:'pepsi oxxo',           valor:9.0,   cartao:'Inter 07', cartaoKey:'inter07',cat:'Mercado',     obs:'',          faturaMes:3},
-    {data:'2026-04-11',desc:'posto de gasolina',    valor:50.0,  cartao:'Inter 07', cartaoKey:'inter07',cat:'Transporte',  obs:'',          faturaMes:3},
-    {data:'2026-04-09',desc:'estacionamento itau',  valor:3.0,   cartao:'Inter 07', cartaoKey:'inter07',cat:'Transporte',  obs:'depositar 500 amanda itau', faturaMes:3},
-    {data:'2026-04-09',desc:'joanim',               valor:18.0,  cartao:'Inter 07', cartaoKey:'inter07',cat:'Mercado',     obs:'bolacha de limão, torradinha e fanta laranja zero', faturaMes:3},
-    {data:'2026-04-09',desc:'posto de gasolina',    valor:20.0,  cartao:'Inter 07', cartaoKey:'inter07',cat:'Transporte',  obs:'',          faturaMes:3},
-    {data:'2026-04-08',desc:'posto de gasolina',    valor:20.0,  cartao:'Inter 07', cartaoKey:'inter07',cat:'Transporte',  obs:'',          faturaMes:3},
-    {data:'2026-04-07',desc:'mercadinho dona pia',  valor:13.40, cartao:'Inter 07', cartaoKey:'inter07',cat:'Alimentação', obs:'monster+povilho', faturaMes:3},
-    {data:'2026-04-07',desc:'posto de gasolina',    valor:30.0,  cartao:'Inter 07', cartaoKey:'inter07',cat:'Transporte',  obs:'',          faturaMes:3},
-    {data:'2026-04-04',desc:'corte de cabelo',      valor:80.0,  cartao:'Inter 07', cartaoKey:'inter07',cat:'Serviços',    obs:'',          faturaMes:3},
-    {data:'2026-04-03',desc:'posto de gasolina carrefour sbc', valor:30.0, cartao:'Inter 07', cartaoKey:'inter07', cat:'Transporte', obs:'', faturaMes:3},
-    {data:'2026-04-03',desc:'farmácia carrefour sbc', valor:30.0, cartao:'Inter 07', cartaoKey:'inter07', cat:'Farmácia', obs:'', faturaMes:3},
-    {data:'2026-04-01',desc:'posto de gasolina',    valor:30.0,  cartao:'Inter 07', cartaoKey:'inter07',cat:'Transporte',  obs:'',          faturaMes:3},
-    {data:'2026-03-25',desc:'GASTO TOTAL ESPORADICO', valor:1092.60, cartao:'Itaú 20',  cartaoKey:'itau',   cat:'Outros', obs:'GASTO TOTAL APENAS PARA REGISTRAR', faturaMes:2},
-    {data:'2026-03-15',desc:'GASTO TOTAL ESPORADICO', valor:379.39,  cartao:'Nubank 09',cartaoKey:'nubank', cat:'Outros', obs:'GASTO TOTAL APENAS PARA REGISTRAR', faturaMes:2},
-    {data:'2026-03-15',desc:'GASTO TOTAL ESPORADICO', valor:633.55,  cartao:'Inter 07', cartaoKey:'inter07',cat:'Outros', obs:'GASTO TOTAL APENAS PARA REGISTRAR', faturaMes:2}
-  ],
+  cartoes: [],
+  salarios: [],
+  extras: [],
+  fixos: [],
+  parcelamentos: [],
+  esporadicos: [],
   planejamento: []
 };
 
